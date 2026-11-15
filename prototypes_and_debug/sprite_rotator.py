@@ -1,40 +1,37 @@
 #Cree le 9 Mai 2024
-from math import cos,sin,radians,floor,fabs
+from math import cos,sin,radians,floor,ceil
 from kandinsky import fill_rect as fr
 from time import sleep as sl
 
-def ent(x):
- if x-floor(x)>.5:return floor(x)+1
- elif x-floor(x)<=.5:return floor(x)
-c,s=lambda x:round(cos(radians(x)),2),lambda x:round(sin(radians(x)),2)
 projectile=[[0,0,0,0,0,1,1,1,1,1,1,1,1,1,0],[0,1,1,1,1,1,1,2,2,2,2,2,2,1,1],[1,1,1,1,2,2,2,2,2,2,2,2,2,2,1],[0,0,1,1,1,1,1,2,2,2,2,2,2,1,1],[0,0,0,0,0,0,1,1,1,1,1,1,1,1,0]]
 col=[[(0,0,255),(0,0,150)],[(255,0,0),(150,0,0)]]
 
-def ls(x,y,t,d,col):
- global c,s
- px,py=c(d),s(d)
- for a in range(t):
-  for b in range(t):
-   ax,ay=ent(a*px-b*py),ent(a*py+b*px)
-   fr(ent(x+ax),ent(y+ay),1,1,col)
-def draw(x,y,t,d,col):
- px,py,k=c(d),s(d),t-1
- for a,b in [[0,0],[1,0],[1,1],[0,1]]:
-  ax,ay=a*k*px-b*k*py,a*k*py+b*k*px
-  ls(x+ax,y+ay,t,d,col)
-  d=(d+90)%360
+def draw_b(x, y, t=2, d=0, cl=0, l=projectile):
+  rad=radians(360-d%360)
+  px,py=cos(rad),sin(rad)
+  cols,rows=len(l[0]),len(l)
+  hw,hh=(cols*t)/2,(rows*t)/2
+  palette=col[cl]
+  # Bounding box des 4 coins centrés sur (0, 0)
+  corners=((-hw,-hh),(hw,-hh),(-hw,hh),(hw,hh))
+  xs=[cx*px-cy*py for cx,cy in corners]
+  ys=[cx*py+cy*px for cx,cy in corners]
+  min_x,max_x=floor(min(xs)),ceil(max(xs))
+  min_y,max_y=floor(min(ys)),ceil(max(ys))
+  for dy in range(min_y,max_y+1):
+    run_col,run_start=0,min_x
+    for dx in range(min_x,max_x+1):
+      #Debug line:fr(x+dx,y+dy,1,1,(0,255,0))
+      sx,sy=dx*px+dy*py+hw,-dx*py+dy*px+hh
+      ix,iy=floor(sx/t),floor(sy/t)
+      val=l[iy][ix]if(0<=ix<cols and 0<=iy<rows)else 0
+      if val!=run_col:
+        if run_col!=0:fr(x+run_start,y+dy,dx-run_start,1,palette[run_col-1])
+        run_col,run_start=val,dx
+    if run_col!=0:fr(x+run_start,y+dy,max_x+1-run_start,1,palette[run_col-1])
 
-def draw_b(x,y,t=2,d=0,cl=0,l=projectile):
- d,f=360-d%360,draw
- px,py=c(d),s(d)
- for i in range(4):
-  if fabs(d-i*90)<7:f=ls
- for a in range(len(l[0])):
-  for b in range(len(l)):
-   nx,ny=x+a*t*px-b*t*py,y+a*t*py+b*t*px
-   if l[b][a]!=0:f(nx,ny,t,d,col[cl][l[b][a]-1])
-
-for i in range(360):
+for i in range(91):
   fr(0,0,320,222,(255,)*3)
   draw_b(160,111,5,i)
   sl(0.01)
+

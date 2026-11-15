@@ -9,7 +9,7 @@ An archive of **early NumWorks MicroPython experiments, prototypes, debug tools,
 ```
 Archive-Lab/
 ├── prototypes_and_debug/
-│   ├── sprite_rotator.py              # Forward-mapping pixel sprite rotation test
+│   ├── sprite_rotator.py              # Inverse-mapping pixel sprite rotation test
 │   ├── checkers_capture_analyzer.py   # Board capture analysis debugger for Checkers
 │   ├── checkers_board_visualizer.py   # Visual debugger for Checkers move traces
 │   ├── bitmap_char_renderer.py        # Binary/hex character bitmap rendering prototype
@@ -43,7 +43,7 @@ Small experimental and debugging scripts built while developing larger projects:
 ### Sprite Rotator
 [`prototypes_and_debug/sprite_rotator.py`](prototypes_and_debug/sprite_rotator.py) · *Created May 09, 2024*
 
-Rotates a pixel-art projectile sprite across any trigonometric angle. Uses naive forward mapping (`cos`/`sin` rounding per source pixel), which leaves gaps/holes in the rotated output (tracked as an open enhancement issue).
+Rotates a pixel-art projectile sprite around its center across any trigonometric angle. Uses **inverse (backward) mapping** over the rotated bounding box and **row-by-row horizontal run-length rendering** (`fill_rect`) to eliminate rotation gaps/holes and reduce draw calls.
 
 ### Checkers Capture Analyzer
 [`prototypes_and_debug/checkers_capture_analyzer.py`](prototypes_and_debug/checkers_capture_analyzer.py) · *Created June 17, 2024*
