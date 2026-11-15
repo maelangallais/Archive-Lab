@@ -13,7 +13,8 @@ Archive-Lab/
 │   ├── checkers_capture_analyzer.py   # Board capture analysis debugger for Checkers
 │   ├── checkers_board_visualizer.py   # Visual debugger for Checkers move traces
 │   ├── bitmap_char_renderer.py        # Binary/hex character bitmap rendering prototype
-│   └── qr_mask_patterns.py            # Visualizer for the 8 ISO QR-code data masks
+│   ├── qr_mask_patterns.py            # Visualizer for the 8 ISO QR-code data masks
+│   └── maze_movement_test.py          # Minimalist 2-line movement loop test for Maze
 ├── colors/
 │   ├── rgb_color_picker.py            # Interactive RGB color picker & RGB565 quantizer
 │   ├── bilinear_color_gradient.py     # 4-corner bilinear color gradient
@@ -22,13 +23,15 @@ Archive-Lab/
 │   ├── reflection_angle_wip.py        # Unfinished reflection-angle experiment
 │   └── cps_benchmark.py               # Clicks-per-second (CPS) key-spam benchmark
 └── early_graphics_and_toys/
-    ├── rosette_turtle.py              # Early Turtle rosette drawing
-    ├── rosette_kandinsky.py           # Kandinsky port of a classic rosette script
-    ├── nested_squares_turtle.py       # 4 interlocked-square Turtle patterns
-    ├── fibonacci_spiral_turtle.py     # Turtle Fibonacci spiral
-    ├── pixel_art_scene.py             # Hardcoded 16×11 pixel-art scene
-    ├── bouncing_dvd_logo.py           # Classic bouncing DVD logo
-    └── movable_rainbow_circle.py      # Movable rainbow circle toy
+    ├── turtle/
+    │   ├── rosette_turtle.py          # Early Turtle rosette drawing
+    │   ├── nested_squares_turtle.py   # 4 interlocked-square Turtle patterns
+    │   └── fibonacci_spiral_turtle.py # Turtle Fibonacci spiral
+    └── kandinsky/
+        ├── rosette_kandinsky.py       # Kandinsky port of a classic rosette script
+        ├── pixel_art_scene.py         # Hardcoded 16×11 pixel-art scene
+        ├── bouncing_dvd_logo.py       # Classic bouncing DVD logo
+        └── movable_rainbow_circle.py  # Movable rainbow circle toy
 ```
 
 ---
@@ -61,6 +64,11 @@ Early prototype testing how to decode and draw binary- and hexadecimal-encoded c
 [`prototypes_and_debug/qr_mask_patterns.py`](prototypes_and_debug/qr_mask_patterns.py) · *Created August 03, 2023*
 
 Visualizes the **8 standard QR-code data-masking patterns** on screen to experiment with checkerboard/masking formulas prior to QR-code generation.
+
+### Minimalist Maze Movement Test
+[`prototypes_and_debug/maze_movement_test.py`](prototypes_and_debug/maze_movement_test.py) · *Created March 31, 2023*
+
+An early movement-input experiment built for [Maze](https://github.com/maelangallais/Maze). Never used in the final game, but preserved for the simplicity of its **2-line `while True:` movement loop** (`x, y = x + kd(3) - kd(0), y + kd(2) - kd(1)`).
 
 ---
 
@@ -101,38 +109,42 @@ Measures how many times you can press `EXE` (configurable on line 10) within 1 s
 
 ## 🐢 Early Graphics & Screen Toys (`early_graphics_and_toys/`)
 
-### Turtle Rosette
-[`early_graphics_and_toys/rosette_turtle.py`](early_graphics_and_toys/rosette_turtle.py) · *Created February 05, 2023*
+### Turtle (`early_graphics_and_toys/turtle/`)
+
+#### Turtle Rosette
+[`early_graphics_and_toys/turtle/rosette_turtle.py`](early_graphics_and_toys/turtle/rosette_turtle.py) · *Created February 05, 2023*
 
 A very early beginner `turtle` script drawing a colorful rosette.
 
-### Kandinsky Rosette (Port)
-[`early_graphics_and_toys/rosette_kandinsky.py`](early_graphics_and_toys/rosette_kandinsky.py) · *Created February 05, 2023*
-
-Originally a third-party `turtle` rosette script that I adapted to run on **`kandinsky`** instead, adding custom color selection and interactive instructions while keeping its clean circle-drawing helper functions.
-
-### Nested Squares (Turtle)
-[`early_graphics_and_toys/nested_squares_turtle.py`](early_graphics_and_toys/nested_squares_turtle.py) · *Created March 09, 2023*
+#### Nested Squares (Turtle)
+[`early_graphics_and_toys/turtle/nested_squares_turtle.py`](early_graphics_and_toys/turtle/nested_squares_turtle.py) · *Created March 09, 2023*
 
 Draws interlocked squares using `turtle`. Mostly based on NumWorks' default example script, expanded with **4 different geometric pattern modes**.
 
-### Fibonacci Spiral
-[`early_graphics_and_toys/fibonacci_spiral_turtle.py`](early_graphics_and_toys/fibonacci_spiral_turtle.py) · *Created May 01, 2023*
+#### Fibonacci Spiral
+[`early_graphics_and_toys/turtle/fibonacci_spiral_turtle.py`](early_graphics_and_toys/turtle/fibonacci_spiral_turtle.py) · *Created May 01, 2023*
 
 Simple `turtle` script that draws a Fibonacci-proportioned spiral for a user-chosen number of iterations.
 
-### Pixel-Art Scene
-[`early_graphics_and_toys/pixel_art_scene.py`](early_graphics_and_toys/pixel_art_scene.py) · *Created May 21, 2023*
+### Kandinsky (`early_graphics_and_toys/kandinsky/`)
+
+#### Kandinsky Rosette (Port)
+[`early_graphics_and_toys/kandinsky/rosette_kandinsky.py`](early_graphics_and_toys/kandinsky/rosette_kandinsky.py) · *Created February 05, 2023*
+
+Originally a third-party `turtle` rosette script that I adapted to run on **`kandinsky`** instead, adding custom color selection and interactive instructions while keeping its clean circle-drawing helper functions.
+
+#### Pixel-Art Scene
+[`early_graphics_and_toys/kandinsky/pixel_art_scene.py`](early_graphics_and_toys/kandinsky/pixel_art_scene.py) · *Created May 21, 2023*
 
 Displays a hardcoded `16 × 11` pre-recorded pixel-art drawing on screen.
 
-### Bouncing DVD Logo
-[`early_graphics_and_toys/bouncing_dvd_logo.py`](early_graphics_and_toys/bouncing_dvd_logo.py) · *Created May 11, 2023*
+#### Bouncing DVD Logo
+[`early_graphics_and_toys/kandinsky/bouncing_dvd_logo.py`](early_graphics_and_toys/kandinsky/bouncing_dvd_logo.py) · *Created May 11, 2023*
 
 Simulates a pixel-art DVD logo bouncing off the NumWorks screen boundaries and changing color on impact.
 
-### Movable Rainbow Circle
-[`early_graphics_and_toys/movable_rainbow_circle.py`](early_graphics_and_toys/movable_rainbow_circle.py) · *Created September 15, 2023*
+#### Movable Rainbow Circle
+[`early_graphics_and_toys/kandinsky/movable_rainbow_circle.py`](early_graphics_and_toys/kandinsky/movable_rainbow_circle.py) · *Created September 15, 2023*
 
 Draws a multicolored circle that you can move around the screen with the directional keys.
 
